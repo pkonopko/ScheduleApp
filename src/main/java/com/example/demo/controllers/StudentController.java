@@ -1,15 +1,14 @@
 package com.example.demo.controllers;
 
 import com.example.demo.models.DTOs.StudentDto;
-import com.example.demo.models.StudentClassesEntity;
 import com.example.demo.models.webDTOs.StudentWebDto;
 import com.example.demo.services.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/student")
@@ -28,7 +27,7 @@ public class StudentController {
                 .dateBirth(newStudent.getDateBirth())
                 .myClasses(new ArrayList<>())
                 .build();
-        return ResponseEntity.ok(studentService.save(studentToSave));
+        return ResponseEntity.created(URI.create("/student")).body(studentService.save(studentToSave));
     }
 
     @PutMapping("/{id}")

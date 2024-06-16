@@ -46,6 +46,6 @@ public class LessonController {
     @PutMapping("/{studentId}")
     public ResponseEntity<String> changeLessonDate(@PathVariable Long studentId, @RequestBody Map<String, LocalDateTime> dates) {
         lessonService.changeLessonDate(studentId, dates);
-        return ResponseEntity.ok("Date lesson has changed");
+        return ResponseEntity.ok("Lesson date has changed");
     }
 }

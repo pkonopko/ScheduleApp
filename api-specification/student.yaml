@@ -1,0 +1,155 @@
+openapi: 3.0.1
+info:
+  title: LessonApi
+  description: Schedule Your Lessons From Home
+  version: '1.0'
+tags:
+  - name: StudentService
+    description: API for student management
+servers:
+  - url: http://localhost:8080
+paths:
+  /student:
+    post:
+      tags:
+        - student
+      description: Create new student
+      operationId: createNewStudent
+      requestBody:
+        $ref: '#/components/requestBodies/studentWebDto'
+      responses:
+        '201':
+          $ref: '#/components/responses/created'
+        '500':
+          $ref: '#/components/responses/exceptionISE'
+  /student/{id}:
+    put:
+      tags:
+        - student
+      description: Edit student
+      operationId: editStudent
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        $ref: '#/components/requestBodies/studentWebDto'
+      responses:
+        '200':
+          $ref: '#/components/responses/created'
+        '500':
+          $ref: '#/components/responses/exceptionISE'
+    delete: 
+      tags:
+        - student
+      description: Delete student
+      operationId: deleteStudent
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: deleted
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "Student deleted"
+        '500':
+          $ref: '#/components/responses/exceptionISE'
+        
+components:
+  requestBodies:
+    studentWebDto:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              lastName:
+                type: string
+              email:
+                type: string
+              password:
+                type: string
+              dateBirth:
+                type: string
+                format: date
+                description: date
+                example: "2024-06-16"
+          examples:
+            '1':
+              $ref: '#/components/examples/studentWebDto'
+              
+  examples:
+    studentWebDto:
+      value:
+        {
+          "name": "Kamila",
+          "lastName": "Kowalska",
+          "email": "k.kow@gmail.com",
+          "password": "12345",
+          "dateBirth": "2000-02-02"
+        }
+        
+  responses:
+    created:
+      description: student created
+      content:
+        application/json:
+         schema:
+          $ref: '#/components/schemas/studentResponse'
+    exceptionISE:
+      description: 500 error
+      content:
+        application/json:
+         schema:
+          type: string
+          example: "Unknown Error"
+          
+  schemas:
+    studentResponse:
+      type: object
+      properties:
+        id: 
+          type: integer
+        name: 
+          type: string
+        lastName: 
+          type: string
+        email: 
+          type: string
+        password: 
+          type: string 
+        dateBirth: 
+          type: string
+          format: date
+          description: date
+          example: "2024-06-16"
+        myClasses: 
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              date: 
+                type: string
+                example: "2024-06-16T14:00"
+              teacherEmail:
+                type: string
+              teacherName:
+                type: string
+              teacherLastName: 
+                type: string
+              subject: 
+                type: string
+              studentId: 
+                type: integer

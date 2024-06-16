@@ -18,5 +18,5 @@ public class StudentDto {
     private String email;
     private String password;
     private LocalDate dateBirth;
-    private List<StudentClassesEntity> myClasses;
+    private List<StudentClassesEntity> myClasses; //zamien na dto
 }
